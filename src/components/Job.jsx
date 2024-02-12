@@ -3,23 +3,25 @@ import { Link } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { useState } from "react";
 
-const Job = ({ data }) => {
+const Job = ({ data, displayTitle = true }) => {
   const dispatch = useDispatch();
   const favorites = useSelector((state) => state.favorites.content);
-  const [isFavorite, setIsFavorite] = useState(favorites.includes(data._id));
+  const [isFavorite, setIsFavorite] = useState(
+    favorites.includes(data.company_name)
+  );
 
   const handleFavoriteClick = () => {
     if (isFavorite) {
       console.log("RIMOSSO DAI PREFERITI");
       dispatch({
         type: "REMOVE_FROM_FAVORITES",
-        payload: data._id,
+        payload: data.company_name,
       });
     } else {
       console.log("AGGIUNTO AI PREFERITI");
       dispatch({
         type: "ADD_TO_FAVORITES",
-        payload: data._id,
+        payload: data.company_name,
       });
     }
     setIsFavorite(!isFavorite);
@@ -31,13 +33,17 @@ const Job = ({ data }) => {
       style={{ border: "1px solid #00000033", borderRadius: 4 }}
     >
       <Col xs={3}>
-        <Link to={`/${data.company_name}`}>{data.company_name}</Link>
+        <Link to={`/${!displayTitle ? data : data.company_name}`}>
+          {!displayTitle ? data : data.company_name}
+        </Link>
       </Col>
-      <Col xs={8}>
-        <a href={data.url} target="_blank" rel="noreferrer">
-          {data.title}
-        </a>
-      </Col>
+      {displayTitle && (
+        <Col xs={8}>
+          <a href={data.url} target="_blank" rel="noreferrer">
+            {data.title}
+          </a>
+        </Col>
+      )}
       <Col xs={1}>
         <i
           onClick={handleFavoriteClick}
