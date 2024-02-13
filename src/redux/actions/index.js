@@ -17,16 +17,30 @@ export const removeToFavoriteAction = (i) => {
   };
 };
 
-export const addToFindedAction = (finded) => {
-  return {
-    type: ADD_TO_FINDED,
-    payload: finded,
+export const addToFindedAction = (query) => {
+  return async (dispatch) => {
+    try {
+      const baseEndpoint =
+        "https://strive-benchmark.herokuapp.com/api/jobs?search=";
+      const response = await fetch(baseEndpoint + query + "&limit=20");
+
+      if (response.ok) {
+        const { data } = await response.json();
+        dispatch({
+          type: ADD_TO_FINDED,
+          payload: data,
+        });
+      } else {
+        alert("Error fetching results");
+      }
+    } catch (error) {
+      console.error("Error during request:", error);
+    }
   };
 };
 
-export const resetFindedAction = (finded) => {
+export const resetFindedAction = () => {
   return {
     type: RESET_FINDED,
-    payload: finded,
   };
 };
