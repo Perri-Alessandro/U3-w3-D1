@@ -1,11 +1,12 @@
 import { useState } from "react";
-import { Container, Row, Col, Form } from "react-bootstrap";
+import { Container, Row, Col, Form, Spinner } from "react-bootstrap";
 import Job from "./Job";
 import { Link } from "react-router-dom";
 
 const MainSearch = () => {
   const [query, setQuery] = useState("");
   const [jobs, setJobs] = useState([]);
+  const [loading, setLoading] = useState(false);
 
   const baseEndpoint =
     "https://strive-benchmark.herokuapp.com/api/jobs?search=";
@@ -16,6 +17,7 @@ const MainSearch = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setLoading(true);
 
     try {
       const response = await fetch(baseEndpoint + query + "&limit=20");
@@ -28,6 +30,8 @@ const MainSearch = () => {
       }
     } catch (error) {
       console.log(error);
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -53,9 +57,17 @@ const MainSearch = () => {
           </Form>
         </Col>
         <Col xs={10} className="mx-auto mb-5">
-          {jobs.map((jobData) => (
-            <Job key={jobData._id} data={jobData} />
-          ))}
+          {loading ? (
+            <div className="text-center mt-5">
+              <Spinner
+                animation="border"
+                role="status"
+                variant="success"
+              ></Spinner>
+            </div>
+          ) : (
+            jobs.map((jobData) => <Job key={jobData._id} data={jobData} />)
+          )}
         </Col>
       </Row>
     </Container>

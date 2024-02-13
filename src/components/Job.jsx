@@ -46,7 +46,7 @@ const Job = ({ data }) => {
       <Col xs={1}>
         <i
           onClick={handleFavoriteClick}
-          className={`bi bi-star${isFavorite ? "-fill" : ""}`}
+          className={`bi bi-star${isFavorite ? "-fill text-warning" : ""}`}
         ></i>
       </Col>
     </Row>
