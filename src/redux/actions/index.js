@@ -10,10 +10,10 @@ export const addToFavoriteAction = (displayTitle) => {
   };
 };
 
-export const removeToFavoriteAction = (displayTitle) => {
+export const removeToFavoriteAction = (i) => {
   return {
     type: REMOVE_FROM_FAVORITES,
-    payload: displayTitle,
+    payload: i,
   };
 };
 

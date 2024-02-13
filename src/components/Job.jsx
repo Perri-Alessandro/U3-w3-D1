@@ -2,11 +2,8 @@ import { Row, Col } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { useState } from "react";
-import { ADD_TO_FAVORITES, addToFavoriteAction } from "../redux/actions";
-import {
-  REMOVE_FROM_FAVORITES,
-  removeToFavoriteAction,
-} from "../redux/actions";
+import { addToFavoriteAction } from "../redux/actions";
+import { removeToFavoriteAction } from "../redux/actions";
 
 const Job = ({ data, displayTitle = true }) => {
   const dispatch = useDispatch();
