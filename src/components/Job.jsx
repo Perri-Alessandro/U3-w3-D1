@@ -2,6 +2,11 @@ import { Row, Col } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { useState } from "react";
+import { ADD_TO_FAVORITES, addToFavoriteAction } from "../redux/actions";
+import {
+  REMOVE_FROM_FAVORITES,
+  removeToFavoriteAction,
+} from "../redux/actions";
 
 const Job = ({ data, displayTitle = true }) => {
   const dispatch = useDispatch();
@@ -13,16 +18,10 @@ const Job = ({ data, displayTitle = true }) => {
   const handleFavoriteClick = () => {
     if (isFavorite) {
       console.log("RIMOSSO DAI PREFERITI");
-      dispatch({
-        type: "REMOVE_FROM_FAVORITES",
-        payload: data.company_name,
-      });
+      dispatch(removeToFavoriteAction(displayTitle));
     } else {
       console.log("AGGIUNTO AI PREFERITI");
-      dispatch({
-        type: "ADD_TO_FAVORITES",
-        payload: data.company_name,
-      });
+      dispatch(addToFavoriteAction(displayTitle));
     }
     setIsFavorite(!isFavorite);
   };
