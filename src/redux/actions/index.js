@@ -3,17 +3,17 @@ export const REMOVE_FROM_FAVORITES = "REMOVE_FROM_FAVORITES";
 export const ADD_TO_FINDED = "ADD_TO_FINDED ";
 export const RESET_FINDED = "RESET_FINDED";
 
-export const addToFavoriteAction = (displayTitle) => {
+export const addToFavoriteAction = (job) => {
   return {
     type: ADD_TO_FAVORITES,
-    payload: displayTitle,
+    payload: job,
   };
 };
 
-export const removeToFavoriteAction = (i) => {
+export const removeToFavoriteAction = (job) => {
   return {
     type: REMOVE_FROM_FAVORITES,
-    payload: i,
+    payload: job,
   };
 };
 

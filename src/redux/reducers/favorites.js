@@ -18,7 +18,7 @@ const favoriteReducer = (state = initialState, action) => {
         ...state,
 
         content: state.content.filter(
-          (job, i) => i !== action.payload //tengo tutti i job tranne quello che ha action.payload (indice attuale)
+          (job) => job._id !== action.payload._id //tengo tutti i job tranne quello che ha action.payload (indice attuale)
         ),
       };
     default:

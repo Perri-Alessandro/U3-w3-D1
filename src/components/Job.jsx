@@ -1,13 +1,19 @@
 import { Row, Col } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
+import { useState, useEffect } from "react";
 import { addToFavoriteAction } from "../redux/actions";
 import { removeToFavoriteAction } from "../redux/actions";
 
 const Job = ({ data }) => {
   const dispatch = useDispatch();
   const favorites = useSelector((state) => state.favorites.content);
-  const isFavorite = favorites.some((favorite) => favorite._id === data._id);
+  const [isFavorite, setIsFavorite] = useState(false);
+
+  useEffect(() => {
+    // Aggiorna lo stato isFavorite quando favorites o data cambia
+    setIsFavorite(favorites.some((favorite) => favorite._id === data._id));
+  }, [favorites, data._id]);
 
   const handleFavoriteClick = () => {
     if (isFavorite) {
@@ -17,6 +23,7 @@ const Job = ({ data }) => {
       console.log("AGGIUNTO AI PREFERITI");
       dispatch(addToFavoriteAction(data));
     }
+    setIsFavorite(!isFavorite);
   };
 
   return (
